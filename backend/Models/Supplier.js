@@ -61,15 +61,16 @@ class Supplier {
     static async Create(supplier) {
         if (!supplier) {
             console.warn('❌ Supplier data is required.');
+            return null;
         }
-        const query = "INSERT INTO supplier SET?";
+        const query = "INSERT INTO supplier SET ?";
         try {
             console.log("➕ Creating a new supplier...");
             const results = await db.query(query, supplier);
             return results.insertId;  // Retourne l'ID du fournisseur inséré
         } catch (error) {
             console.error('😞 Error creating supplier: ' + error.message);
-            return null;
+            throw error;
         }
     }
     

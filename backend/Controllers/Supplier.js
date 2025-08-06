@@ -88,12 +88,13 @@ class Suppliers {
     
             // Création des données du fournisseur
             const supplier = { supplierId, supplierName, phone, address };
-            const supplierId = await Supplier.Create(supplier);
+            const insertId = await Supplier.Create(supplier);
     
             // Retourner la réponse réussie
             return res.status(201).json({
                 message: '✅ Supplier created successfully',
-                supplierId: supplierId
+                supplierId: supplierId,
+                insertId: insertId
             });
     
         } catch (err) {

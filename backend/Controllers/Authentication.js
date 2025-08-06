@@ -138,19 +138,14 @@ class Authentication {
      * ✅ CORRECTION: Méthode me() corrigée avec les bons paramètres
      * Get current user information
      */
-    static async me(req, res) {
+    static async me(req, res, next) {
         try {
             // req.user devrait être défini par un middleware d'authentification
             if (!req.user) {
-                return res.status(401).json({
-                    message: '❌ No user authenticated',
-                });
+                return ResponseHandler.unauthorized(res, 'No user authenticated');
             }
 
-            return res.status(200).json({
-                message: '✅ User logged in',
-                user: req.user,
-            });
+            return ResponseHandler.success(res, req.user, 'User information retrieved successfully');
         } catch (err) {
             next(new AppError('Error retrieving user information', 500));
         }
